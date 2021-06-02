@@ -51,7 +51,7 @@ https://github.com/serejapenkin/Kursovaya
 
 
 ### Диаграмма ER:
-![ER диаграмма](./img/ERD.png)
+![ER диаграмма](./img/ERD.PNG)
 
 
 
