@@ -1,0 +1,198 @@
+﻿<Window x:Class="KursPekin.windows.ContractProsess"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KursPekin.windows"
+        mc:Ignorable="d"
+        Title="ContractProsess" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image 
+        Margin="5"
+        Source="../img/triceps_fitness_icon_181746.ico" 
+        VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Column="0"
+                    VerticalAlignment="Bottom">
+
+            <Button Content="добавить"
+                    x:Name="ConrtactWindow"
+                   Click="ConrtactWindow_Click"
+                    Margin="0 0 0 0"
+                    
+                   ></Button>
+            <Button Content="Редактировать"
+                    x:Name="EdditConract"
+                   Click="EdditConract_Click"
+                    Margin="0 0 0 0"
+                    
+                   ></Button>
+            <Button Content="Удалить"
+                    x:Name="DeleeteContract"
+                   Click="DeleeteContract_Click"
+                    Margin="0 0 0 0"
+                    
+                   ></Button>
+            <Button Content="Выход"
+                    x:Name="ExitContractButton"
+                    Margin="0 0 0 10"
+                    Click="ExitContractButton_Click"
+                   ></Button>
+
+
+
+        </StackPanel>
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <StackPanel 
+    Orientation="Horizontal" 
+    VerticalAlignment="Center"
+                Grid.Row="0">
+                <Label Content="Цена: "/>
+                <RadioButton 
+        GroupName="Price"
+        Tag="1"
+        Content="по возрастанию" 
+        IsChecked="True" 
+        Checked="RadioButton_Checked"
+        VerticalContentAlignment="Center"/>
+                <RadioButton 
+        GroupName="Price" 
+        Tag="2"
+        Content="по убыванию" 
+        Checked="RadioButton_Checked"
+        VerticalContentAlignment="Center"/>
+                <Label Content="Фильтр по скидке: "
+                     Margin="10,0,0,0"
+                        VerticalAlignment="Center"/>
+                <ComboBox
+                     Name="DiscountFilterComboBox"
+                        SelectedIndex="0"
+                        SelectionChanged="DiscountFilterComboBox_SelectionChanged"
+                         ItemsSource="{Binding FilterByDiscountNamesList}"/>
+                <Label Content="Поиск"/>
+                <TextBox
+                    x:Name="SearchFilterTextBox"
+                    Width="250"
+                    KeyUp="TextBox_KeyUp"
+                    VerticalAlignment="Center"
+                    />
+
+            </StackPanel>
+
+
+
+            <ListView 
+            Grid.Column="1"
+            Grid.Row="1"
+            ItemsSource="{Binding ContracList2}"
+            x:Name="ProductListView">
+
+                <ListView.ItemTemplate>
+
+
+                    <DataTemplate>
+                        <!-- рисуем вокруг элемента границу с загругленными углами -->
+                        <Border 
+                BorderThickness="1" 
+                BorderBrush="Black" 
+                CornerRadius="5">
+                            <!-- основная "сетка" из 3-х столбцов: картинка, содержимое, цена -->
+                            <Grid 
+                    Margin="10" 
+                    HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="64"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Image
+                        Width="64" 
+                        Height="64"
+                        Source="{Binding Userman.ImagePreviewClient}" />
+
+
+
+
+
+
+                                <!-- для содержимого рисуем вложенную сетку -->
+                                <Grid Grid.Column="1" Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel
+                            Orientation="Horizontal">
+                                     
+                                        <TextBlock 
+                                Text="{Binding Userman.FullName }"/>
+                                        <TextBlock 
+                                Text="Тип контракта:  "/>
+                                        <TextBlock 
+                                Text="{Binding ContractType.Title}"/>
+                                        <TextBlock 
+                                Text=" "/>
+                                        <TextBlock 
+                                Text="{Binding Userman.Role.Title}"/>
+
+                                    </StackPanel>
+                                    
+                                    <TextBlock 
+                                        Grid.Row="1"
+                                        
+                                Text="{Binding prosess}"/>
+                                    <TextBlock 
+                                        Grid.Row="2"
+                                       
+                                      Text="{Binding CostString}"
+                                />
+
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style 
+            TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <DataTrigger
+                            Binding="{Binding MinSalary}"
+                            Value="True">
+                                <Setter
+                                Property="Background"
+                                Value="LightGreen"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Setter 
+                Property="HorizontalContentAlignment"
+                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Label Content="{Binding FilteredServicesCount}"></Label>
+                <Label >/</Label>
+                <Label Content="{Binding ServicesCount}"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

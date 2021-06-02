@@ -1,0 +1,159 @@
+﻿<Window x:Class="KursPekin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KursPekin"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image 
+        Margin="5"
+        Source="./img/triceps_fitness_icon_181746.ico" 
+        VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Column="0"
+                    VerticalAlignment="Bottom">
+           
+            <Button Content="операции"
+                    x:Name="ContrantShow"
+                    Click="ContrantShow_Click"
+                    Margin="0 0 0 0"
+                    
+                   ></Button>
+            <Button Content="Выход"
+                    x:Name="ExitButton"
+                    Margin="0 0 0 10"
+                    Click="ExitButton_Click"
+                   ></Button>
+
+
+
+        </StackPanel>
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <StackPanel 
+    Orientation="Horizontal" 
+    VerticalAlignment="Center"
+                Grid.Row="0">
+                <Label Content="Цена: "/>
+                <RadioButton 
+        GroupName="Price"
+        Tag="1"
+        Content="по возрастанию" 
+        IsChecked="True" 
+        Checked="RadioButton_Checked"
+        VerticalContentAlignment="Center"/>
+                <RadioButton 
+        GroupName="Price" 
+        Tag="2"
+        Content="по убыванию" 
+        Checked="RadioButton_Checked"
+        VerticalContentAlignment="Center"/>
+
+
+            </StackPanel>
+
+
+
+            <ListView 
+            Grid.Column="1"
+            Grid.Row="1"
+            ItemsSource="{Binding ContracList}"
+            x:Name="ProductListView">
+
+                <ListView.ItemTemplate>
+
+
+                    <DataTemplate>
+                        <!-- рисуем вокруг элемента границу с загругленными углами -->
+                        <Border 
+                BorderThickness="1" 
+                BorderBrush="Black" 
+                CornerRadius="5">
+                            <!-- основная "сетка" из 3-х столбцов: картинка, содержимое, цена -->
+                            <Grid 
+                    Margin="10" 
+                    HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="64"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Image
+                        Width="64" 
+                        Height="64"
+                        Source="{Binding Path=ImagePreview}" />
+
+                                
+                               
+                              
+
+
+                                <!-- для содержимого рисуем вложенную сетку -->
+                                <Grid Grid.Column="1" Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel
+                            Orientation="Horizontal">
+                                        <TextBlock 
+                                Text=" Номер контракт:    "/>
+                                        <TextBlock 
+                                Text="{Binding NumberContract }"/>
+                                        <TextBlock 
+                                Text="   Тип контракта:  "/>
+                                        <TextBlock 
+                                Text="{Binding ContractType.Title}"/>
+                                       
+                                        
+                                    </StackPanel>
+                                    <TextBlock 
+                                        Grid.Row="1"
+                                Text=" Сумма контракта:   "/>
+                                    <TextBlock 
+                                        Grid.Row="2"
+                                            Text="{Binding CostString}"
+                                />
+
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style 
+            TargetType="ListViewItem">
+                        
+                        <Setter 
+                Property="HorizontalContentAlignment"
+                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Label Content="{Binding FilteredServicesCount}"></Label>
+                <Label >/</Label>
+                <Label Content="{Binding ServicesCount}"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
